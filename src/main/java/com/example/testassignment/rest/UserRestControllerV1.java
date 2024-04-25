@@ -8,9 +8,10 @@ import com.example.testassignment.exception.UserNotAdultException;
 import com.example.testassignment.exception.UserNotFoundException;
 import com.example.testassignment.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,8 +77,8 @@ public class UserRestControllerV1 {
 
     @GetMapping
     public ResponseEntity<?> getUsersByBirthDateRange(
-            @RequestParam(value = "from") LocalDate from,
-            @RequestParam(value = "to") LocalDate to,
+            @RequestParam(value = "from") @Past(message = "The 'From' date must be past.") LocalDate from,
+            @RequestParam(value = "to") @PastOrPresent(message = "The 'To' date must be past or current") LocalDate to,
             Pageable pageable) {
         try {
             List<UserEntity> users = userService.getAllUsersByBirthDateRange(from, to, pageable);
