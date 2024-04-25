@@ -13,7 +13,7 @@ public interface UserService {
 
     UserEntity updateUser(UserEntity user);
 
-    Page<UserEntity> getAllUsersByBirthDateRange(LocalDate from, LocalDate to, Pageable pageable);
+    List<UserEntity> getAllUsersByBirthDateRange(LocalDate from, LocalDate to, Pageable pageable);
 
     void deleteById(Integer id);
 }

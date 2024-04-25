@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,11 +44,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserEntity> getAllUsersByBirthDateRange(LocalDate from, LocalDate to, Pageable pageable) {
+    public List<UserEntity> getAllUsersByBirthDateRange(LocalDate from, LocalDate to, Pageable pageable) {
         if (from.isAfter(to)) {
             throw new BirthDateRangeException("'From' date must be less than 'To' date.");
         }
-        return userRepository.findByBirthDateBetween(from, to, pageable);
+        return userRepository.findByBirthDateBetween(from, to, pageable)
+                .stream().toList();
     }
 
     @Override

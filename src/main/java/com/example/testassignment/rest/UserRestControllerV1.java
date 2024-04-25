@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -77,9 +78,9 @@ public class UserRestControllerV1 {
     public ResponseEntity<?> getUsersByBirthDateRange(
             @RequestParam(value = "from") LocalDate from,
             @RequestParam(value = "to") LocalDate to,
-            @RequestParam(value = "p") Pageable pageable) {
+            Pageable pageable) {
         try {
-            Page<UserEntity> users = userService.getAllUsersByBirthDateRange(from, to, pageable);
+            List<UserEntity> users = userService.getAllUsersByBirthDateRange(from, to, pageable);
             return ResponseEntity.ok(users);
         } catch (BirthDateRangeException e) {
             return ResponseEntity.badRequest()

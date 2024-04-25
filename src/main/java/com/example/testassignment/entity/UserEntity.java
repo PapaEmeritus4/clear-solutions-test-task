@@ -40,9 +40,7 @@ public class UserEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @Null
     private String address;
 
-    @Null
     private String phoneNumber;
 }
