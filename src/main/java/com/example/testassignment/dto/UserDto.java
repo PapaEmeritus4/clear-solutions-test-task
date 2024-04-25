@@ -1,7 +1,11 @@
 package com.example.testassignment.dto;
 
 import com.example.testassignment.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +21,20 @@ import java.time.LocalDate;
 public class UserDto {
 
     private Integer id;
+
+    @Email(message = "Invalid email address")
+    @NotNull(message = "Email should be not empty")
     private String email;
+
+    @NotNull(message = "First Name should be not empty")
     private String firstName;
+
+    @NotNull(message = "Last Name should be not empty")
     private String lastName;
+
+    @NotNull(message = "Birth date should be not empty")
+    @Past(message = "Birth date must be in the past")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private String address;
     private String phoneNumber;
