@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity saveUser(UserEntity user) {
-        if (!isUserAdult(user.getBirthDate())) {
+        if (isUserAdult(user.getBirthDate())) {
             throw new UserNotAdultException("User must be at least 18 years old.");
         }
         return userRepository.save(user);

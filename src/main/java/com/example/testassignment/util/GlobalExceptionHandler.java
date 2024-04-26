@@ -1,5 +1,6 @@
 package com.example.testassignment.util;
 
+import com.example.testassignment.exception.UserNotAdultException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -26,6 +27,14 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return errors;
+    }
+
+    @ExceptionHandler(UserNotAdultException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> handleYourOtherException(UserNotAdultException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(Exception.class)
