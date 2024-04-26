@@ -125,7 +125,7 @@ public class UserRepositoryTests {
         LocalDate from = LocalDate.of(1985, 3, 10);
         LocalDate to = LocalDate.of(1991, 5, 15);
 
-        Page<UserEntity> users = userRepository.findByBirthDateBetween(from, to, Pageable.unpaged());
+        List<UserEntity> users = userRepository.findByBirthDateBetween(from, to, Pageable.unpaged());
         //then
         assertThat(CollectionUtils.isEmpty(users.stream().toList())).isFalse();
         assertThat(users.stream().count()).isEqualTo(2);

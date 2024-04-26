@@ -7,7 +7,6 @@ import com.example.testassignment.exception.UserNotFoundException;
 import com.example.testassignment.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import org.springframework.stereotype.Service;
@@ -48,8 +47,7 @@ public class UserServiceImpl implements UserService {
         if (from.isAfter(to)) {
             throw new BirthDateRangeException("'From' date must be less than 'To' date.");
         }
-        return userRepository.findByBirthDateBetween(from, to, pageable)
-                .stream().toList();
+        return userRepository.findByBirthDateBetween(from, to, pageable);
     }
 
     @Override

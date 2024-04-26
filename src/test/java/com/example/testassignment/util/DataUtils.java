@@ -16,6 +16,17 @@ public class DataUtils {
                 .build();
     }
 
+    public static UserEntity getJohnDoeTransientNotAdult() {
+        return UserEntity.builder()
+                .firstName("John")
+                .lastName("Doe")
+                .email("john.doe@mail.com")
+                .birthDate(LocalDate.of(2020, 5, 15))
+                .address("123 Main St")
+                .phoneNumber("123-456-7890")
+                .build();
+    }
+
     public static UserEntity getMikeSmithTransient() {
         return UserEntity.builder()
                 .firstName("Mike")
