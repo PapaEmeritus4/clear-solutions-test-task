@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         boolean isExists = userRepository.existsById(user.getId());
 
         if (!isExists) {
-            throw new UserNotFoundException("User not found");
+            throw new UserNotFoundException("User not found.");
         }
         return userRepository.save(user);
     }
