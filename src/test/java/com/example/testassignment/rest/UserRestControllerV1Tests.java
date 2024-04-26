@@ -184,7 +184,7 @@ public class UserRestControllerV1Tests {
     @DisplayName("Test get users by birth date range with incorrect date from functionality")
     public void givenUsers_whenGetUsersByBirthDateRange_thenErrorResponse() throws Exception {
         //given
-        LocalDate from = LocalDate.of(1992, 12, 31);
+        LocalDate from = LocalDate.of(1992, 1, 1);
         LocalDate to = LocalDate.of(1984, 1, 1);
 
         BDDMockito.given(userService.getAllUsersByBirthDateRange(from, to, Pageable.unpaged()))
