@@ -22,11 +22,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Value("${minimum.adult.age}")
-    private static int minimumAdultAge;
+    private int minimumAdultAge;
 
     @Override
     public UserEntity saveUser(UserEntity user) {
-        if (isUserAdult(user.getBirthDate())) {
+        if (!isUserAdult(user.getBirthDate(), minimumAdultAge)) {
             throw new UserNotAdultException("User must be at least 18 years old.");
         }
         return userRepository.save(user);
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public static boolean isUserAdult(LocalDate birthDate) {
+    public boolean isUserAdult(LocalDate birthDate, int minimumAdultAge) {
         LocalDate currentDate = LocalDate.now();
         int age = Period.between(birthDate, currentDate).getYears();
         return age >= minimumAdultAge;

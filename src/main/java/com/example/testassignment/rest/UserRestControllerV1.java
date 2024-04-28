@@ -28,51 +28,24 @@ public class UserRestControllerV1 {
 
     @PostMapping
     public ResponseEntity<?> createUser(@Valid @RequestBody UserDto dto) {
-        try {
             UserEntity entity = dto.toEntity();
             UserEntity createdEntity = userService.saveUser(entity);
             UserDto result = UserDto.fromEntity(createdEntity);
             return ResponseEntity.ok(result);
-        } catch (UserNotAdultException e) {
-            return ResponseEntity.badRequest()
-                    .body(ErrorDto.builder()
-                            .status(400)
-                            .message(e.getMessage())
-                            .build()
-                    );
-        }
     }
 
     @PutMapping
     public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto dto) {
-        try {
             UserEntity entity = dto.toEntity();
             UserEntity updatedEntity = userService.updateUser(entity);
             UserDto result = UserDto.fromEntity(updatedEntity);
             return ResponseEntity.ok(result);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest()
-                    .body(ErrorDto.builder()
-                            .status(400)
-                            .message(e.getMessage())
-                            .build()
-                    );
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) {
-        try {
             userService.deleteById(id);
             return ResponseEntity.ok().build();
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.badRequest()
-                    .body(ErrorDto.builder()
-                            .status(400)
-                            .message(e.getMessage())
-                            .build()
-                    );
-        }
     }
 
     @GetMapping
@@ -80,17 +53,17 @@ public class UserRestControllerV1 {
             @RequestParam(value = "from") @Past(message = "The 'From' date must be past.") LocalDate from,
             @RequestParam(value = "to") @PastOrPresent(message = "The 'To' date must be past or current") LocalDate to,
             Pageable pageable) {
-        try {
             List<UserEntity> users = userService.getAllUsersByBirthDateRange(from, to, pageable);
             return ResponseEntity.ok(users);
-        } catch (BirthDateRangeException e) {
-            return ResponseEntity.badRequest()
-                    .body(ErrorDto.builder()
-                            .status(400)
-                            .message(e.getMessage())
-                            .build()
-                    );
-        }
+    }
 
+    @ExceptionHandler({UserNotAdultException.class, UserNotFoundException.class, BirthDateRangeException.class})
+    public ResponseEntity<?> handleException(Exception e) {
+        return ResponseEntity.badRequest()
+                .body(ErrorDto.builder()
+                        .status(400)
+                        .message(e.getMessage())
+                        .build()
+                );
     }
 }

@@ -29,14 +29,6 @@ public class GlobalExceptionHandler {
         return errors;
     }
 
-    @ExceptionHandler(UserNotAdultException.class)
-    @ResponseBody
-    public ResponseEntity<Map<String, String>> handleYourOtherException(UserNotAdultException ex) {
-        Map<String, String> error = new HashMap<>();
-        error.put("message", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<Map<String, String>> handleOtherExceptions(Exception ex) {
